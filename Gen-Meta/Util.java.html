@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+                <html lang="en">
+                <head>
+                    <meta charset="iso-8859-1">
+                    <script src="https://code.jquery.com/jquery-3.6.1.slim.js"></script>
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+                    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+                    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+                    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+                    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+                    <link th:href="@{/css/style.css}" rel="stylesheet" type="text/css">
+
+                    <link rel="icon" href="https://www.zhaw.ch/favicon.ico" type="image/png">
+                    <title>M. Sc. Seminar in Software Engineering: Segmentations by LLama 3.3 70B/fp-16 Instruct model</title></head>
+                    <body>
+                    <div class="container py-5"><div id="accordion"><pre><div class="card">
+          <div class="card-header" id="Util.java: PromptType.GEN_META with temperature = 0 and top P = 1">
+            <h5 class="mb-0">
+              <button class="btn btn-link" data-toggle="collapse" data-target="#collapseUtil.java:PromptType.GEN_META" aria-expanded="true" aria-controls="collapseUtil.java:PromptType.GEN_META">
+                Konfiguration - Temperature: Util.java, Technique: PromptType.GEN_META
+              </button>
+            </h5>
+          </div>
+
+          <div id="collapseUtil.java:PromptType.GEN_META" class="collapse show" aria-labelledby="Util.java:PromptType.GEN_META" data-parent="#accordion">
+            <div class="card-body">
+              <p>Prompt: 
+**Prompt:**
+
+---
+
+**Task:**
+
+Split the given source code under SOURCE-CODE into syntactically and semantically coherent fragments by inserting `###` as a delimiter. The goal is to produce code fragments that are meaningful, self-contained, and small enough to be used for Delta Debugging analysis.
+
+**Guidelines:**
+
+* Each fragment must be no longer than 5 lines.
+
+* Each fragment should represent a logical code unit, such as:
+
+  * a package or import statement
+  * a class or interface declaration
+  * a method signature (with its parameter list)
+  * a block of related statements (e.g., variable declarations, loops, conditionals)
+
+* **Large methods must be split** into smaller, logical sections. For example:
+
+  * Variable declarations
+  * Loops
+  * Conditional blocks
+  * Return statements
+
+* **However, do not split apart directly dependent statements.** For example:
+
+  * If a variable is declared and immediately used in the next statement(s), keep those together.
+  * For example, in a block like:
+
+    ###
+    Collection processed = options.values();
+    Option[] optionsArray = new Option[processed.size()];
+    return (Option[]) processed.toArray(optionsArray);
+    ###
+
+    These lines are **dependent** and must remain as a single fragment.
+
+* Avoid splitting inside a single statement or expression.
+
+* Fragments should remain syntactically correct and semantically clear.
+
+* The prompt should work for Java and similar languages.
+
+---
+
+**Example Input:**
+
+```java
+import java.util.*;
+
+public class TfIdf {
+
+    private Integer alpha;
+
+    public static double tf(List<String> doc, String term) {
+        int termCount = 0;
+        int totalTerms = doc.size();
+        for (String word : doc) {
+            if (word.equalsIgnoreCase(term)) {
+                termCount++;
+            }
+        }
+        double tf = (double) termCount / totalTerms;
+        return tf;
+    }
+    
+    public static double idf(List<List<String>> docs, String term) {
+        int totalDocs = docs.size();
+        int docsWithTerm = 0;
+        for (List<String> document : docs) {
+            for (String word : document) {
+                if (word.equalsIgnoreCase(term)) {
+                    docsWithTerm++;
+                    break;
+                }
+            }
+        }     
+        double idf = Math.log((double) totalDocs / (1 + docsWithTerm));
+        return idf;
+    }
+
+    public static double tfidf(List<String> doc, List<List<String>> docs, String term) {
+        double tf = tf(doc, term);
+        double idf = idf(docs, term);
+        return tf * idf;
+    }
+}
+```
+
+---
+
+**Expected Output:**
+
+```java
+import java.util.*;
+###
+public class TfIdf {
+###
+    private Integer alpha;
+###
+    public static double tf(List<String> doc, String term) {
+###
+        int termCount = 0;
+###
+        int totalTerms = doc.size();
+###
+        for (String word : doc) {
+            if (word.equalsIgnoreCase(term)) {
+                termCount++;
+            }
+        }
+###
+        double tf = (double) termCount / totalTerms;
+        return tf;
+###
+    }
+###
+    public static double idf(List<List<String>> docs, String term) {
+###
+        int totalDocs = docs.size();
+###
+        int docsWithTerm = 0;
+###
+        for (List<String> document : docs) {
+            for (String word : document) {
+                if (word.equalsIgnoreCase(term)) {
+                    docsWithTerm++;
+                    break;
+                }
+            }
+        }
+###
+        double idf = Math.log((double) totalDocs / (1 + docsWithTerm));
+        return idf;
+###
+    public static double tfidf(List<String> doc, List<List<String>> docs, String term) {
+###
+        double tf = tf(doc, term);
+        double idf = idf(docs, term);
+        return tf * idf;
+###
+    }
+###
+
+
+ SOURCE-CODE: 
+package org.apache.commons.cli;
+
+class Util {
+
+
+    static String stripLeadingHyphens(String str)
+    {
+        if (str.startsWith("--"))
+        {
+            return str.substring(2, str.length());
+        }
+        else if (str.startsWith("-"))
+        {
+            return str.substring(1, str.length());
+        }
+
+        return str;
+    }
+
+    static String stripLeadingAndTrailingQuotes(String str)
+    {
+        if (str.startsWith("\"")) {
+            str = str.substring(1, str.length());
+        }
+        if (str.endsWith("\"")) {
+            str = str.substring(0, str.length()-1);
+        }
+        return str;
+    }
+}</p>
+              <p>Response: <span class="p-2 rounded bg-light text-muted small d-block mb-2">```java
+package org.apache.commons.cli;
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+class Util {
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    static String stripLeadingHyphens(String str)
+    </span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    {
+        if (str.startsWith("--"))
+        </span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        {
+            return str.substring(2, str.length());
+        }
+        </span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        else if (str.startsWith("-"))
+        </span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        {
+            return str.substring(1, str.length());
+        }
+        </span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        return str;
+    }
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    static String stripLeadingAndTrailingQuotes(String str)
+    </span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    {
+        if (str.startsWith("\"")) 
+        </span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        {
+            str = str.substring(1, str.length());
+        }
+        </span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        if (str.endsWith("\"")) 
+        </span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        {
+            str = str.substring(0, str.length()-1);
+        }
+        </span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        return str;
+    }
+</span>
+}
+```</p>
+            </div>
+          </div>
+        </div></pre></div></body></html>

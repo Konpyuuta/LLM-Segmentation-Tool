@@ -1,0 +1,1118 @@
+<!DOCTYPE html>
+                <html lang="en">
+                <head>
+                    <meta charset="iso-8859-1">
+                    <script src="https://code.jquery.com/jquery-3.6.1.slim.js"></script>
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+                    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+                    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+                    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+                    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+                    <link th:href="@{/css/style.css}" rel="stylesheet" type="text/css">
+
+                    <link rel="icon" href="https://www.zhaw.ch/favicon.ico" type="image/png">
+                    <title>M. Sc. Seminar in Software Engineering: Segmentations by LLama 3.3 70B/fp-16 Instruct model</title></head>
+                    <body>
+                    <div class="container py-5"><div id="accordion"><pre><div class="card">
+          <div class="card-header" id="Option.java: PromptType.FEW_SHOT with temperature = 0 and top P = 1">
+            <h5 class="mb-0">
+              <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOption.java:PromptType.FEW_SHOT" aria-expanded="true" aria-controls="collapseOption.java:PromptType.FEW_SHOT">
+                Konfiguration - Temperature: Option.java, Technique: PromptType.FEW_SHOT
+              </button>
+            </h5>
+          </div>
+
+          <div id="collapseOption.java:PromptType.FEW_SHOT" class="collapse show" aria-labelledby="Option.java:PromptType.FEW_SHOT" data-parent="#accordion">
+            <div class="card-body">
+              <p>Prompt: SOURCE-CODE: 
+
+import java.util.*;
+
+public class TfIdf {
+
+    private Integer alpha;
+
+    public static double tf(List<String> doc, String term) {
+        int termCount = 0;
+        int totalTerms = doc.size();
+
+        for (String word : doc) {
+            if (word.equalsIgnoreCase(term)) {
+                termCount++;
+            }
+        }
+
+        double tf = (double) termCount / totalTerms;
+        return tf;
+    }
+
+    public static double idf(List<List<String>> docs, String term) {
+        int totalDocs = docs.size();
+        int docsWithTerm = 0;
+
+        for (List<String> document : docs) {
+            for (String word : document) {
+                if (word.equalsIgnoreCase(term)) {
+                    docsWithTerm++;
+                    break;
+                }
+            }
+        }
+
+        double idf = Math.log((double) totalDocs / (1 + docsWithTerm));
+        return idf;
+    }
+
+    public static double tfidf(List<String> doc, List<List<String>> docs, String term) {
+        double tf = tf(doc, term);
+        double idf = idf(docs, term);
+        return tf * idf;
+    }
+}
+
+Prompt: Take a look at the java-code under SOURCE-CODE above and build semantically coherent code-fragments by dividing the code with ### as a delimiter. Only give the code-fragments as a response, omit everything else.
+Answer: 
+
+###
+import java.util.*;
+###
+
+###
+public class TfIdf {
+###
+
+###
+    private Integer alpha;
+##
+
+###
+    public static double tf(List<String> doc, String term) {
+###
+
+###
+        int termCount = 0;
+###
+
+###
+        int totalTerms = doc.size();
+###
+
+###
+        for (String word : doc) {
+            if (word.equalsIgnoreCase(term)) {
+                termCount++;
+            }
+        }
+###
+        double tf = (double) termCount / totalTerms;
+        return tf;
+###
+    
+###
+    public static double idf(List<List<String>> docs, String term) {
+###
+        int totalDocs = docs.size();
+###
+
+###
+        int docsWithTerm = 0;
+###
+
+###
+        for (List<String> document : docs) {
+            for (String word : document) {
+                if (word.equalsIgnoreCase(term)) {
+                    docsWithTerm++;
+                    break;
+                }
+            }
+        }     
+###
+
+###
+        double idf = Math.log((double) totalDocs / (1 + docsWithTerm));
+        return idf;
+###
+
+###
+    public static double tfidf(List<String> doc, List<List<String>> docs, String term) {
+###
+
+###
+        double tf = tf(doc, term);
+        double idf = idf(docs, term);
+        return tf * idf;
+###
+
+Prompt: Take a look at the java-code under SOURCE-CODE below and build semantically coherent code-fragments by dividing the code with ### as a delimiter. Only give the code-fragments as a response, omit everything else.
+SOURCE-CODE: 
+package org.apache.commons.cli;
+
+import java.util.ArrayList;
+
+
+public class Option {
+
+    public static final int UNINITIALIZED = -1;
+
+    public static final int UNLIMITED_VALUES = -2;
+
+    private String opt;
+
+    private String longOpt;
+
+    private boolean hasArg;
+
+    private String argName = "arg";
+
+    private String description;
+
+    private boolean required;
+
+    private boolean optionalArg;
+
+    private int numberOfArgs = UNINITIALIZED;
+
+    private Object type;
+
+    private ArrayList values = new ArrayList();
+
+    private char valuesep;
+
+    public Option(String opt, String description)
+           throws IllegalArgumentException
+    {
+        this(opt, null, false, description);
+    }
+
+    public Option(String opt, boolean hasArg, String description)
+           throws IllegalArgumentException
+    {
+        this(opt, null, hasArg, description);
+    }
+
+    public Option(String opt, String longOpt, boolean hasArg, 
+                  String description)
+           throws IllegalArgumentException
+    {
+        OptionValidator.validateOption(opt);
+
+        this.opt = opt;
+        this.longOpt = longOpt;
+
+        if (hasArg)
+        {
+            this.numberOfArgs = 1;
+        }
+
+        this.hasArg = hasArg;
+        this.description = description;
+    }
+
+    public int getId()
+    {
+        return getKey().charAt(0);
+    }
+
+    String getKey()
+    {
+        if (opt == null)
+        {
+            return this.longOpt;
+        }
+
+        return this.opt;
+    }
+
+    public String getOpt()
+    {
+        return this.opt;
+    }
+
+    public Object getType()
+    {
+        return this.type;
+    }
+
+    public void setType(Object type)
+    {
+        this.type = type;
+    }
+
+    public String getLongOpt()
+    {
+        return this.longOpt;
+    }
+
+    public void setLongOpt(String longOpt)
+    {
+        this.longOpt = longOpt;
+    }
+
+    public void setOptionalArg(boolean optionalArg)
+    {
+        this.optionalArg = optionalArg;
+    }
+
+    public boolean hasOptionalArg()
+    {
+        return this.optionalArg;
+    }
+
+    public boolean hasLongOpt()
+    {
+        return (this.longOpt != null);
+    }
+
+    public boolean hasArg()
+    {
+        return (this.numberOfArgs > 0) || (numberOfArgs == UNLIMITED_VALUES);
+    }
+
+    public String getDescription()
+    {
+        return this.description;
+    }
+
+    public void setDescription(String description)
+    {
+        this.description = description;
+    }
+
+    public boolean isRequired()
+    {
+        return this.required;
+    }
+
+    public void setRequired(boolean required)
+    {
+        this.required = required;
+    }
+
+    public void setArgName(String argName)
+    {
+        this.argName = argName;
+    }
+
+    public String getArgName()
+    {
+        return this.argName;
+    }
+
+
+    public boolean hasArgName()
+    {
+        return (this.argName != null && this.argName.length() > 0);
+    }
+
+    public boolean hasArgs()
+    {
+        return (this.numberOfArgs > 1) 
+                || (this.numberOfArgs == UNLIMITED_VALUES);
+    }
+
+    public void setArgs(int num)
+    {
+        this.numberOfArgs = num;
+    }
+
+    public void setValueSeparator(char sep)
+    {
+        this.valuesep = sep;
+    }
+
+    public char getValueSeparator()
+    {
+        return this.valuesep;
+    }
+
+    public boolean hasValueSeparator()
+    {
+        return (this.valuesep > 0);
+    }
+
+    public int getArgs()
+    {
+        return this.numberOfArgs;
+    }
+
+    void addValue(String value)
+    {
+        switch (numberOfArgs)
+        {
+        case UNINITIALIZED:
+            throw new RuntimeException("NO_ARGS_ALLOWED");
+
+        default:
+            processValue(value);
+        }
+    }
+
+    private void processValue(String value)
+    {
+        if (hasValueSeparator())
+        {
+            char sep = getValueSeparator();
+
+            int index = value.indexOf(sep);
+
+            while (index != -1)
+            {
+                if (values.size() == (numberOfArgs - 1))
+                {
+                    break;
+                }
+
+
+                add(value.substring(0, index));
+
+
+                value = value.substring(index + 1);
+
+
+                index = value.indexOf(sep);
+            }
+        }
+
+
+        add(value);
+    }
+
+    private void add(String value)
+    {
+        if ((numberOfArgs > 0) && (values.size() > (numberOfArgs - 1)))
+        {
+            throw new RuntimeException("Cannot add value, list full.");
+        }
+
+
+        this.values.add(value);
+    }
+
+    public String getValue()
+    {
+        return hasNoValues() ? null : (String) this.values.get(0);
+    }
+
+    public String getValue(int index)
+        throws IndexOutOfBoundsException
+    {
+        return hasNoValues() ? null : (String) this.values.get(index);
+    }
+
+    public String getValue(String defaultValue)
+    {
+        String value = getValue();
+
+        return (value != null) ? value : defaultValue;
+    }
+
+    public String[] getValues()
+    {
+        return hasNoValues()
+               ? null : (String[]) this.values.toArray(new String[] {  });
+    }
+
+    public java.util.List getValuesList()
+    {
+        return this.values;
+    }
+
+    public String toString()
+    {
+        StringBuffer buf = new StringBuffer().append("[ option: ");
+
+        buf.append(this.opt);
+
+        if (this.longOpt != null)
+        {
+            buf.append(" ").append(this.longOpt);
+        }
+
+        buf.append(" ");
+
+        if (hasArg)
+        {
+            buf.append("+ARG");
+        }
+
+        buf.append(" :: ").append(this.description);
+
+        if (this.type != null)
+        {
+            buf.append(" :: ").append(this.type);
+        }
+
+        buf.append(" ]");
+
+        return buf.toString();
+    }
+
+    private boolean hasNoValues()
+    {
+        return this.values.size() == 0;
+    }
+
+    public boolean equals( Object o )
+    {
+        if ( this == o )
+        {
+            return true;
+        }
+        if ( o == null || getClass() != o.getClass() )
+        {
+            return false;
+        }
+
+        Option option = (Option) o;
+
+
+        if ( opt != null ? !opt.equals( option.opt ) : option.opt != null )
+        {
+            return false;
+        }
+        if ( longOpt != null ? !longOpt.equals( option.longOpt ) : option.longOpt != null )
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+    public int hashCode()
+    {
+        int result;
+        result = ( opt != null ? opt.hashCode() : 0 );
+        result = 31 * result + ( longOpt != null ? longOpt.hashCode() : 0 );
+        return result;
+    }
+
+}
+</p>
+              <p>Response: <span class="p-2 rounded bg-light text-muted small d-block mb-2"></span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+package org.apache.commons.cli;
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+import java.util.ArrayList;
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+public class Option {
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    public static final int UNINITIALIZED = -1;
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    public static final int UNLIMITED_VALUES = -2;
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    private String opt;
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    private String longOpt;
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    private boolean hasArg;
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    private String argName = "arg";
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    private String description;
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    private boolean required;
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    private boolean optionalArg;
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    private int numberOfArgs = UNINITIALIZED;
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    private Object type;
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    private ArrayList values = new ArrayList();
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    private char valuesep;
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    public Option(String opt, String description) throws IllegalArgumentException {
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        this(opt, null, false, description);
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    public Option(String opt, boolean hasArg, String description) throws IllegalArgumentException {
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        this(opt, null, hasArg, description);
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    public Option(String opt, String longOpt, boolean hasArg, String description) throws IllegalArgumentException {
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        OptionValidator.validateOption(opt);
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        this.opt = opt;
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        this.longOpt = longOpt;
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        if (hasArg) {
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+            this.numberOfArgs = 1;
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        }
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        this.hasArg = hasArg;
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        this.description = description;
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    public int getId() {
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        return getKey().charAt(0);
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    String getKey() {
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        if (opt == null) {
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+            return this.longOpt;
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        }
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        return this.opt;
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    public String getOpt() {
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        return this.opt;
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    public Object getType() {
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        return this.type;
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    public void setType(Object type) {
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        this.type = type;
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    public String getLongOpt() {
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        return this.longOpt;
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    public void setLongOpt(String longOpt) {
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        this.longOpt = longOpt;
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    public void setOptionalArg(boolean optionalArg) {
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        this.optionalArg = optionalArg;
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    public boolean hasOptionalArg() {
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        return this.optionalArg;
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    public boolean hasLongOpt() {
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        return (this.longOpt!= null);
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    public boolean hasArg() {
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        return (this.numberOfArgs > 0) || (numberOfArgs == UNLIMITED_VALUES);
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    public String getDescription() {
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        return this.description;
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    public void setDescription(String description) {
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        this.description = description;
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    public boolean isRequired() {
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        return this.required;
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    public void setRequired(boolean required) {
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        this.required = required;
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    public void setArgName(String argName) {
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        this.argName = argName;
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    public String getArgName() {
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        return this.argName;
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    public boolean hasArgName() {
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        return (this.argName!= null && this.argName.length() > 0);
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    public boolean hasArgs() {
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        return (this.numberOfArgs > 1) || (this.numberOfArgs == UNLIMITED_VALUES);
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    public void setArgs(int num) {
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        this.numberOfArgs = num;
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    public void setValueSeparator(char sep) {
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        this.valuesep = sep;
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    public char getValueSeparator() {
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        return this.valuesep;
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    public boolean hasValueSeparator() {
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        return (this.valuesep > 0);
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    public int getArgs() {
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        return this.numberOfArgs;
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    void addValue(String value) {
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        switch (numberOfArgs) {
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        case UNINITIALIZED:
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+            throw new RuntimeException("NO_ARGS_ALLOWED");
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        default:
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+            processValue(value);
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        }
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    private void processValue(String value) {
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        if (hasValueSeparator()) {
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+            char sep = getValueSeparator();
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+            int index = value.indexOf(sep);
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+            while (index!= -1) {
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+                if (values.size() == (numberOfArgs - 1)) {
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+                    break;
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+                }
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+                add(value.substring(0, index));
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+                value = value.substring(index + 1);
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+                index = value.indexOf(sep);
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+            }
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        }
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        add(value);
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    private void add(String value) {
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        if ((numberOfArgs > 0) && (values.size() > (numberOfArgs - 1))) {
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+            throw new RuntimeException("Cannot add value, list full.");
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        }
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        this.values.add(value);
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    public String getValue() {
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        return hasNoValues()? null : (String) this.values.get(0);
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    public String getValue(int index) throws IndexOutOfBoundsException {
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        return hasNoValues()? null : (String) this.values.get(index);
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    public String getValue(String defaultValue) {
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        String value = getValue();
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        return (value!= null)? value : defaultValue;
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    public String[] getValues() {
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        return hasNoValues()? null : (String[]) this.values.toArray(new String[] {});
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    public java.util.List getValuesList() {
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        return this.values;
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    public String toString() {
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        StringBuffer buf = new StringBuffer().append("[ option: ");
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        buf.append(this.opt);
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        if (this.longOpt!= null) {
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+            buf.append(" ").append(this.longOpt);
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        }
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        buf.append(" ");
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        if (hasArg) {
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+            buf.append("+ARG");
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        }
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        buf.append(" :: ").append(this.description);
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        if (this.type!= null) {
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+            buf.append(" :: ").append(this.type);
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        }
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        buf.append(" ]");
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        return buf.toString();
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    private boolean hasNoValues() {
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        return this.values.size() == 0;
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    public boolean equals(Object o) {
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        if (this == o) {
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+            return true;
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        }
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        if (o == null || getClass()!= o.getClass()) {
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+            return false;
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        }
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        Option option = (Option) o;
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        if (opt!= null?!opt.equals(option.opt) : option.opt!= null) {
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+            return false;
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        }
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        if (longOpt!= null?!longOpt.equals(option.longOpt) : option.longOpt!= null) {
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+            return false;
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        }
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        return true;
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    public int hashCode() {
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        int result;
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        result = (opt!= null? opt.hashCode() : 0);
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        result = 31 * result + (longOpt!= null? longOpt.hashCode() : 0);
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        return result;
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span>
+}</p>
+            </div>
+          </div>
+        </div></pre></div></body></html>

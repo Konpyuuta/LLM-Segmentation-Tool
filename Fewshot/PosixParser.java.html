@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+                <html lang="en">
+                <head>
+                    <meta charset="iso-8859-1">
+                    <script src="https://code.jquery.com/jquery-3.6.1.slim.js"></script>
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+                    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+                    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+                    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+                    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+                    <link th:href="@{/css/style.css}" rel="stylesheet" type="text/css">
+
+                    <link rel="icon" href="https://www.zhaw.ch/favicon.ico" type="image/png">
+                    <title>M. Sc. Seminar in Software Engineering: Segmentations by LLama 3.3 70B/fp-16 Instruct model</title></head>
+                    <body>
+                    <div class="container py-5"><div id="accordion"><pre><div class="card">
+          <div class="card-header" id="PosixParser.java: PromptType.FEW_SHOT with temperature = 0 and top P = 1">
+            <h5 class="mb-0">
+              <button class="btn btn-link" data-toggle="collapse" data-target="#collapsePosixParser.java:PromptType.FEW_SHOT" aria-expanded="true" aria-controls="collapsePosixParser.java:PromptType.FEW_SHOT">
+                Konfiguration - Temperature: PosixParser.java, Technique: PromptType.FEW_SHOT
+              </button>
+            </h5>
+          </div>
+
+          <div id="collapsePosixParser.java:PromptType.FEW_SHOT" class="collapse show" aria-labelledby="PosixParser.java:PromptType.FEW_SHOT" data-parent="#accordion">
+            <div class="card-body">
+              <p>Prompt: SOURCE-CODE: 
+
+import java.util.*;
+
+public class TfIdf {
+
+    private Integer alpha;
+
+    public static double tf(List<String> doc, String term) {
+        int termCount = 0;
+        int totalTerms = doc.size();
+
+        for (String word : doc) {
+            if (word.equalsIgnoreCase(term)) {
+                termCount++;
+            }
+        }
+
+        double tf = (double) termCount / totalTerms;
+        return tf;
+    }
+
+    public static double idf(List<List<String>> docs, String term) {
+        int totalDocs = docs.size();
+        int docsWithTerm = 0;
+
+        for (List<String> document : docs) {
+            for (String word : document) {
+                if (word.equalsIgnoreCase(term)) {
+                    docsWithTerm++;
+                    break;
+                }
+            }
+        }
+
+        double idf = Math.log((double) totalDocs / (1 + docsWithTerm));
+        return idf;
+    }
+
+    public static double tfidf(List<String> doc, List<List<String>> docs, String term) {
+        double tf = tf(doc, term);
+        double idf = idf(docs, term);
+        return tf * idf;
+    }
+}
+
+Prompt: Take a look at the java-code under SOURCE-CODE above and build semantically coherent code-fragments by dividing the code with ### as a delimiter. Only give the code-fragments as a response, omit everything else.
+Answer: 
+
+###
+import java.util.*;
+###
+
+###
+public class TfIdf {
+###
+
+###
+    private Integer alpha;
+##
+
+###
+    public static double tf(List<String> doc, String term) {
+###
+
+###
+        int termCount = 0;
+###
+
+###
+        int totalTerms = doc.size();
+###
+
+###
+        for (String word : doc) {
+            if (word.equalsIgnoreCase(term)) {
+                termCount++;
+            }
+        }
+###
+        double tf = (double) termCount / totalTerms;
+        return tf;
+###
+    
+###
+    public static double idf(List<List<String>> docs, String term) {
+###
+        int totalDocs = docs.size();
+###
+
+###
+        int docsWithTerm = 0;
+###
+
+###
+        for (List<String> document : docs) {
+            for (String word : document) {
+                if (word.equalsIgnoreCase(term)) {
+                    docsWithTerm++;
+                    break;
+                }
+            }
+        }     
+###
+
+###
+        double idf = Math.log((double) totalDocs / (1 + docsWithTerm));
+        return idf;
+###
+
+###
+    public static double tfidf(List<String> doc, List<List<String>> docs, String term) {
+###
+
+###
+        double tf = tf(doc, term);
+        double idf = idf(docs, term);
+        return tf * idf;
+###
+
+Prompt: Take a look at the java-code under SOURCE-CODE below and build semantically coherent code-fragments by dividing the code with ### as a delimiter. Only give the code-fragments as a response, omit everything else.
+SOURCE-CODE: 
+package org.apache.commons.cli;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+
+public class PosixParser extends Parser {
+
+    private ArrayList tokens = new ArrayList();
+
+    private boolean eatTheRest;
+
+    private Option currentOption;
+
+    private Options options;
+
+    private void init()
+    {
+        eatTheRest = false;
+        tokens.clear();
+        currentOption = null;
+    }
+
+    protected String[] flatten(Options options, String[] arguments, 
+                               boolean stopAtNonOption)
+    {
+        init();
+        this.options = options;
+
+        Iterator iter = Arrays.asList(arguments).iterator();
+        String token = null;
+
+        while (iter.hasNext())
+        {
+            token = (String) iter.next();
+
+            if (token.startsWith("--"))
+            {
+                if (token.indexOf('=') != -1)
+                {
+                    tokens.add(token.substring(0, token.indexOf('=')));
+                    tokens.add(token.substring(token.indexOf('=') + 1, 
+                                               token.length()));
+                }
+                else
+                {
+                    tokens.add(token);
+                }
+            }
+
+            else if ("-".equals(token))
+            {
+                processSingleHyphen(token);
+            }
+            else if (token.startsWith("-"))
+            {
+                int tokenLength = token.length();
+
+                if (tokenLength == 2)
+                {
+                    processOptionToken(token, stopAtNonOption);
+                }
+                else if (options.hasOption(token)) {
+                	tokens.add(token);
+                }
+                else
+                {
+                    burstToken(token, stopAtNonOption);
+                }
+            }
+            else
+            {
+                if (stopAtNonOption)
+                {
+                    process(token);
+                }
+                else
+                {
+                    tokens.add(token);
+                }
+            }
+
+            gobble(iter);
+        }
+
+        return (String[]) tokens.toArray(new String[] {  });
+    }
+
+    private void gobble(Iterator iter)
+    {
+        if (eatTheRest)
+        {
+            while (iter.hasNext())
+            {
+                tokens.add(iter.next());
+            }
+        }
+    }
+
+    private void process(String value)
+    {
+        if ((currentOption != null) && currentOption.hasArg())
+        {
+            if (currentOption.hasArg())
+            {
+                tokens.add(value);
+                currentOption = null;
+            }
+            else if (currentOption.hasArgs())
+            {
+                tokens.add(value);
+            }
+        }
+        else
+        {
+            eatTheRest = true;
+            tokens.add("--");
+            tokens.add(value);
+        }
+    }
+
+    private void processSingleHyphen(String hyphen)
+    {
+        tokens.add(hyphen);
+    }
+
+    private void processOptionToken(String token, boolean stopAtNonOption)
+    {
+        if (this.options.hasOption(token))
+        {
+            currentOption = this.options.getOption(token);
+            tokens.add(token);
+        }
+        else if (stopAtNonOption)
+        {
+            eatTheRest = true;
+        }
+    }
+
+    protected void burstToken(String token, boolean stopAtNonOption)
+    {
+        int tokenLength = token.length();
+
+        for (int i = 1; i < tokenLength; i++)
+        {
+            String ch = String.valueOf(token.charAt(i));
+            boolean hasOption = options.hasOption(ch);
+
+            if (hasOption)
+            {
+                tokens.add("-" + ch);
+                currentOption = options.getOption(ch);
+
+                if (currentOption.hasArg() && (token.length() != (i + 1)))
+                {
+                    tokens.add(token.substring(i + 1));
+
+                    break;
+                }
+            }
+            else if (stopAtNonOption)
+            {
+                process(token.substring(i));
+            }
+            else
+            {
+                tokens.add("-" + ch);
+            }
+        }
+    }
+}</p>
+              <p>Response: <span class="p-2 rounded bg-light text-muted small d-block mb-2"></span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+package org.apache.commons.cli;
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+import java.util.ArrayList;
+ 
+import java.util.Arrays; 
+
+import java.util.Iterator;
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+public class PosixParser extends Parser {
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    private ArrayList tokens = new ArrayList();
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    private boolean eatTheRest;
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    private Option currentOption;
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    private Options options;
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    private void init()
+    {
+        eatTheRest = false;
+        tokens.clear();
+        currentOption = null;
+    }
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    protected String[] flatten(Options options, String[] arguments, 
+                               boolean stopAtNonOption)
+    {
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        init();
+        this.options = options;
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        Iterator iter = Arrays.asList(arguments).iterator();
+        String token = null;
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        while (iter.hasNext())
+        {
+            token = (String) iter.next();
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+            if (token.startsWith("--"))
+            {
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+                if (token.indexOf('=')!= -1)
+                {
+                    tokens.add(token.substring(0, token.indexOf('=')));
+                    tokens.add(token.substring(token.indexOf('=') + 1, 
+                                               token.length()));
+                }
+                else
+                {
+                    tokens.add(token);
+                }
+            }
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+            else if ("-".equals(token))
+            {
+                processSingleHyphen(token);
+            }
+            else if (token.startsWith("-"))
+            {
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+                int tokenLength = token.length();
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+                if (tokenLength == 2)
+                {
+                    processOptionToken(token, stopAtNonOption);
+                }
+                else if (options.hasOption(token)) {
+                	tokens.add(token);
+                }
+                else
+                {
+                    burstToken(token, stopAtNonOption);
+                }
+            }
+            else
+            {
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+                if (stopAtNonOption)
+                {
+                    process(token);
+                }
+                else
+                {
+                    tokens.add(token);
+                }
+            }
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+            gobble(iter);
+        }
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        return (String[]) tokens.toArray(new String[] {  });
+    }
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    private void gobble(Iterator iter)
+    {
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        if (eatTheRest)
+        {
+            while (iter.hasNext())
+            {
+                tokens.add(iter.next());
+            }
+        }
+    }
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    private void process(String value)
+    {
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        if ((currentOption!= null) && currentOption.hasArg())
+        {
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+            if (currentOption.hasArg())
+            {
+                tokens.add(value);
+                currentOption = null;
+            }
+            else if (currentOption.hasArgs())
+            {
+                tokens.add(value);
+            }
+        }
+        else
+        {
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+            eatTheRest = true;
+            tokens.add("--");
+            tokens.add(value);
+        }
+    }
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    private void processSingleHyphen(String hyphen)
+    {
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        tokens.add(hyphen);
+    }
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    private void processOptionToken(String token, boolean stopAtNonOption)
+    {
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        if (this.options.hasOption(token))
+        {
+            currentOption = this.options.getOption(token);
+            tokens.add(token);
+        }
+        else if (stopAtNonOption)
+        {
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+            eatTheRest = true;
+        }
+    }
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    protected void burstToken(String token, boolean stopAtNonOption)
+    {
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        int tokenLength = token.length();
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        for (int i = 1; i < tokenLength; i++)
+        {
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+            String ch = String.valueOf(token.charAt(i));
+            boolean hasOption = options.hasOption(ch);
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+            if (hasOption)
+            {
+                tokens.add("-" + ch);
+                currentOption = options.getOption(ch);
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+                if (currentOption.hasArg() && (token.length()!= (i + 1)))
+                {
+                    tokens.add(token.substring(i + 1));
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+                    break;
+                }
+            }
+            else if (stopAtNonOption)
+            {
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+                process(token.substring(i));
+            }
+            else
+            {
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+                tokens.add("-" + ch);
+            }
+        }
+    }
+</span></p>
+            </div>
+          </div>
+        </div></pre></div></body></html>

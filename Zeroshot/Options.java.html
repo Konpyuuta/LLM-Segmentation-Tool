@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+                <html lang="en">
+                <head>
+                    <meta charset="iso-8859-1">
+                    <script src="https://code.jquery.com/jquery-3.6.1.slim.js"></script>
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+                    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+                    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+                    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+                    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+                    <link th:href="@{/css/style.css}" rel="stylesheet" type="text/css">
+
+                    <link rel="icon" href="https://www.zhaw.ch/favicon.ico" type="image/png">
+                    <title>M. Sc. Seminar in Software Engineering: Segmentations by LLama 3.3 70B/fp-16 Instruct model</title></head>
+                    <body>
+                    <div class="container py-5"><div id="accordion"><pre><div class="card">
+          <div class="card-header" id="Options.java: PromptType.ZERO_SHOT with temperature = 0 and top P = 1">
+            <h5 class="mb-0">
+              <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOptions.java:PromptType.ZERO_SHOT" aria-expanded="true" aria-controls="collapseOptions.java:PromptType.ZERO_SHOT">
+                Konfiguration - Temperature: Options.java, Technique: PromptType.ZERO_SHOT
+              </button>
+            </h5>
+          </div>
+
+          <div id="collapseOptions.java:PromptType.ZERO_SHOT" class="collapse show" aria-labelledby="Options.java:PromptType.ZERO_SHOT" data-parent="#accordion">
+            <div class="card-body">
+              <p>Prompt: SOURCE-CODE: 
+package org.apache.commons.cli;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+public class Options {
+
+    private Map shortOpts = new HashMap();
+
+    private Map longOpts = new HashMap();
+
+    private List requiredOpts = new ArrayList();
+
+    private Map optionGroups = new HashMap();
+
+    public Options()
+    {
+    }
+
+    public Options addOptionGroup(OptionGroup group)
+    {
+        Iterator options = group.getOptions().iterator();
+
+        if (group.isRequired())
+        {
+            requiredOpts.add(group);
+        }
+
+        while (options.hasNext())
+        {
+            Option option = (Option) options.next();
+
+            option.setRequired(false);
+            addOption(option);
+
+            optionGroups.put(option.getKey(), group);
+        }
+
+        return this;
+    }
+
+    Collection getOptionGroups(){
+    	return new HashSet(optionGroups.values());
+    }
+
+    public Options addOption(String opt, boolean hasArg, String description)
+    {
+        addOption(opt, null, hasArg, description);
+
+        return this;
+    }
+
+    public Options addOption(String opt, String longOpt, boolean hasArg, 
+                             String description)
+    {
+        addOption(new Option(opt, longOpt, hasArg, description));
+
+        return this;
+    }
+
+    public Options addOption(Option opt)
+    {
+        String key = opt.getKey();
+
+        if (opt.hasLongOpt())
+        {
+            longOpts.put(opt.getLongOpt(), opt);
+        }
+
+        if (opt.isRequired() )
+        {
+            if( requiredOpts.contains(key) ) {
+                requiredOpts.remove( requiredOpts.indexOf(key) );
+            }
+            requiredOpts.add(key);
+        }
+
+        shortOpts.put(key, opt);
+
+        return this;
+    }
+
+    public Collection getOptions()
+    {
+        return Collections.unmodifiableCollection(helpOptions());
+    }
+
+    List helpOptions()
+    {
+        List opts = new ArrayList(shortOpts.values());
+
+        Iterator iter = longOpts.values().iterator();
+
+        while (iter.hasNext())
+        {
+            Object item = iter.next();
+
+            if (!opts.contains(item))
+            {
+                opts.add(item);
+            }
+        }
+
+        return new ArrayList(opts);
+    }
+
+    public List getRequiredOptions()
+    {
+        return requiredOpts;
+    }
+
+    public Option getOption(String opt)
+    {
+        opt = Util.stripLeadingHyphens(opt);
+
+        if (shortOpts.containsKey(opt))
+        {
+            return (Option) shortOpts.get(opt);
+        }
+
+        return (Option) longOpts.get(opt);
+    }
+
+    public boolean hasOption(String opt)
+    {
+        opt = Util.stripLeadingHyphens(opt);
+
+        return shortOpts.containsKey(opt) || longOpts.containsKey(opt);
+    }
+
+    public OptionGroup getOptionGroup(Option opt)
+    {
+        return (OptionGroup) optionGroups.get(opt.getKey());
+    }
+
+    public String toString()
+    {
+        StringBuffer buf = new StringBuffer();
+
+        buf.append("[ Options: [ short ");
+        buf.append(shortOpts.toString());
+        buf.append(" ] [ long ");
+        buf.append(longOpts);
+        buf.append(" ]");
+
+        return buf.toString();
+    }
+}
+ Prompt: Take a look at the java-code under SOURCE-CODE above and build semantically coherent code-fragments by dividing the code with ### as a delimiter. Make sure to always include ### at the end of a code-fragment. Only give the code-fragments as a response, omit everything else.</p>
+              <p>Response: <span class="p-2 rounded bg-light text-muted small d-block mb-2">package org.apache.commons.cli;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+public class Options {
+
+    private Map shortOpts = new HashMap();
+
+    private Map longOpts = new HashMap();
+
+    private List requiredOpts = new ArrayList();
+
+    private Map optionGroups = new HashMap();
+
+    public Options()
+    {
+    }
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    
+    public Options addOptionGroup(OptionGroup group)
+    {
+        Iterator options = group.getOptions().iterator();
+
+        if (group.isRequired())
+        {
+            requiredOpts.add(group);
+        }
+
+        while (options.hasNext())
+        {
+            Option option = (Option) options.next();
+
+            option.setRequired(false);
+            addOption(option);
+
+            optionGroups.put(option.getKey(), group);
+        }
+
+        return this;
+    }
+
+    Collection getOptionGroups(){
+    	return new HashSet(optionGroups.values());
+    }
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    
+    public Options addOption(String opt, boolean hasArg, String description)
+    {
+        addOption(opt, null, hasArg, description);
+
+        return this;
+    }
+
+    public Options addOption(String opt, String longOpt, boolean hasArg, 
+                             String description)
+    {
+        addOption(new Option(opt, longOpt, hasArg, description));
+
+        return this;
+    }
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    
+    public Options addOption(Option opt)
+    {
+        String key = opt.getKey();
+
+        if (opt.hasLongOpt())
+        {
+            longOpts.put(opt.getLongOpt(), opt);
+        }
+
+        if (opt.isRequired() )
+        {
+            if( requiredOpts.contains(key) ) {
+                requiredOpts.remove( requiredOpts.indexOf(key) );
+            }
+            requiredOpts.add(key);
+        }
+
+        shortOpts.put(key, opt);
+
+        return this;
+    }
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    
+    public Collection getOptions()
+    {
+        return Collections.unmodifiableCollection(helpOptions());
+    }
+
+    List helpOptions()
+    {
+        List opts = new ArrayList(shortOpts.values());
+
+        Iterator iter = longOpts.values().iterator();
+
+        while (iter.hasNext())
+        {
+            Object item = iter.next();
+
+            if (!opts.contains(item))
+            {
+                opts.add(item);
+            }
+        }
+
+        return new ArrayList(opts);
+    }
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    
+    public List getRequiredOptions()
+    {
+        return requiredOpts;
+    }
+
+    public Option getOption(String opt)
+    {
+        opt = Util.stripLeadingHyphens(opt);
+
+        if (shortOpts.containsKey(opt))
+        {
+            return (Option) shortOpts.get(opt);
+        }
+
+        return (Option) longOpts.get(opt);
+    }
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    
+    public boolean hasOption(String opt)
+    {
+        opt = Util.stripLeadingHyphens(opt);
+
+        return shortOpts.containsKey(opt) || longOpts.containsKey(opt);
+    }
+
+    public OptionGroup getOptionGroup(Option opt)
+    {
+        return (OptionGroup) optionGroups.get(opt.getKey());
+    }
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    
+    public String toString()
+    {
+        StringBuffer buf = new StringBuffer();
+
+        buf.append("[ Options: [ short ");
+        buf.append(shortOpts.toString());
+        buf.append(" ] [ long ");
+        buf.append(longOpts);
+        buf.append(" ]");
+
+        return buf.toString();
+    }
+</span></p>
+            </div>
+          </div>
+        </div></pre></div></body></html>

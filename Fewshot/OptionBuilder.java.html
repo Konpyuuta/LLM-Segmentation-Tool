@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+                <html lang="en">
+                <head>
+                    <meta charset="iso-8859-1">
+                    <script src="https://code.jquery.com/jquery-3.6.1.slim.js"></script>
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+                    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+                    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+                    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+                    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+                    <link th:href="@{/css/style.css}" rel="stylesheet" type="text/css">
+
+                    <link rel="icon" href="https://www.zhaw.ch/favicon.ico" type="image/png">
+                    <title>M. Sc. Seminar in Software Engineering: Segmentations by LLama 3.3 70B/fp-16 Instruct model</title></head>
+                    <body>
+                    <div class="container py-5"><div id="accordion"><pre><div class="card">
+          <div class="card-header" id="OptionBuilder.java: PromptType.FEW_SHOT with temperature = 0 and top P = 1">
+            <h5 class="mb-0">
+              <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOptionBuilder.java:PromptType.FEW_SHOT" aria-expanded="true" aria-controls="collapseOptionBuilder.java:PromptType.FEW_SHOT">
+                Konfiguration - Temperature: OptionBuilder.java, Technique: PromptType.FEW_SHOT
+              </button>
+            </h5>
+          </div>
+
+          <div id="collapseOptionBuilder.java:PromptType.FEW_SHOT" class="collapse show" aria-labelledby="OptionBuilder.java:PromptType.FEW_SHOT" data-parent="#accordion">
+            <div class="card-body">
+              <p>Prompt: SOURCE-CODE: 
+
+import java.util.*;
+
+public class TfIdf {
+
+    private Integer alpha;
+
+    public static double tf(List<String> doc, String term) {
+        int termCount = 0;
+        int totalTerms = doc.size();
+
+        for (String word : doc) {
+            if (word.equalsIgnoreCase(term)) {
+                termCount++;
+            }
+        }
+
+        double tf = (double) termCount / totalTerms;
+        return tf;
+    }
+
+    public static double idf(List<List<String>> docs, String term) {
+        int totalDocs = docs.size();
+        int docsWithTerm = 0;
+
+        for (List<String> document : docs) {
+            for (String word : document) {
+                if (word.equalsIgnoreCase(term)) {
+                    docsWithTerm++;
+                    break;
+                }
+            }
+        }
+
+        double idf = Math.log((double) totalDocs / (1 + docsWithTerm));
+        return idf;
+    }
+
+    public static double tfidf(List<String> doc, List<List<String>> docs, String term) {
+        double tf = tf(doc, term);
+        double idf = idf(docs, term);
+        return tf * idf;
+    }
+}
+
+Prompt: Take a look at the java-code under SOURCE-CODE above and build semantically coherent code-fragments by dividing the code with ### as a delimiter. Only give the code-fragments as a response, omit everything else.
+Answer: 
+
+###
+import java.util.*;
+###
+
+###
+public class TfIdf {
+###
+
+###
+    private Integer alpha;
+##
+
+###
+    public static double tf(List<String> doc, String term) {
+###
+
+###
+        int termCount = 0;
+###
+
+###
+        int totalTerms = doc.size();
+###
+
+###
+        for (String word : doc) {
+            if (word.equalsIgnoreCase(term)) {
+                termCount++;
+            }
+        }
+###
+        double tf = (double) termCount / totalTerms;
+        return tf;
+###
+    
+###
+    public static double idf(List<List<String>> docs, String term) {
+###
+        int totalDocs = docs.size();
+###
+
+###
+        int docsWithTerm = 0;
+###
+
+###
+        for (List<String> document : docs) {
+            for (String word : document) {
+                if (word.equalsIgnoreCase(term)) {
+                    docsWithTerm++;
+                    break;
+                }
+            }
+        }     
+###
+
+###
+        double idf = Math.log((double) totalDocs / (1 + docsWithTerm));
+        return idf;
+###
+
+###
+    public static double tfidf(List<String> doc, List<List<String>> docs, String term) {
+###
+
+###
+        double tf = tf(doc, term);
+        double idf = idf(docs, term);
+        return tf * idf;
+###
+
+Prompt: Take a look at the java-code under SOURCE-CODE below and build semantically coherent code-fragments by dividing the code with ### as a delimiter. Only give the code-fragments as a response, omit everything else.
+SOURCE-CODE: 
+package org.apache.commons.cli;
+
+
+public class OptionBuilder {
+
+    private static String longopt;
+
+    private static String description;
+
+    private static String argName;
+
+    private static boolean required;
+
+    private static int numberOfArgs = Option.UNINITIALIZED;
+
+    private static Object type;
+
+    private static boolean optionalArg;
+
+    private static char valuesep;
+
+    private static OptionBuilder instance = new OptionBuilder();
+
+    private OptionBuilder()
+    {
+    }
+
+
+    private static void reset()
+    {
+        description = null;
+        argName = "arg";
+        longopt = null;
+        type = null;
+        required = false;
+        numberOfArgs = Option.UNINITIALIZED;
+
+
+        optionalArg = false;
+        valuesep = (char) 0;
+    }
+
+    public static OptionBuilder withLongOpt(String newLongopt)
+    {
+        OptionBuilder.longopt = newLongopt;
+
+        return instance;
+    }
+
+    public static OptionBuilder hasArg()
+    {
+        OptionBuilder.numberOfArgs = 1;
+
+        return instance;
+    }
+
+    public static OptionBuilder hasArg(boolean hasArg)
+    {
+        OptionBuilder.numberOfArgs = (hasArg == true) ? 1 : Option.UNINITIALIZED;
+
+        return instance;
+    }
+
+    public static OptionBuilder withArgName(String name)
+    {
+        OptionBuilder.argName = name;
+
+        return instance;
+    }
+
+    public static OptionBuilder isRequired()
+    {
+        OptionBuilder.required = true;
+
+        return instance;
+    }
+
+    public static OptionBuilder withValueSeparator(char sep)
+    {
+        OptionBuilder.valuesep = sep;
+
+        return instance;
+    }
+
+    public static OptionBuilder withValueSeparator()
+    {
+        OptionBuilder.valuesep = '=';
+
+        return instance;
+    }
+
+    public static OptionBuilder isRequired(boolean newRequired)
+    {
+        OptionBuilder.required = newRequired;
+
+        return instance;
+    }
+
+    public static OptionBuilder hasArgs()
+    {
+        OptionBuilder.numberOfArgs = Option.UNLIMITED_VALUES;
+
+        return instance;
+    }
+
+    public static OptionBuilder hasArgs(int num)
+    {
+        OptionBuilder.numberOfArgs = num;
+
+        return instance;
+    }
+
+    public static OptionBuilder hasOptionalArg()
+    {
+        OptionBuilder.numberOfArgs = 1;
+        OptionBuilder.optionalArg = true;
+
+        return instance;
+    }
+
+    public static OptionBuilder hasOptionalArgs()
+    {
+        OptionBuilder.numberOfArgs = Option.UNLIMITED_VALUES;
+        OptionBuilder.optionalArg = true;
+
+        return instance;
+    }
+
+    public static OptionBuilder hasOptionalArgs(int numArgs)
+    {
+        OptionBuilder.numberOfArgs = numArgs;
+        OptionBuilder.optionalArg = true;
+
+        return instance;
+    }
+
+    public static OptionBuilder withType(Object newType)
+    {
+        OptionBuilder.type = newType;
+
+        return instance;
+    }
+
+    public static OptionBuilder withDescription(String newDescription)
+    {
+        OptionBuilder.description = newDescription;
+
+        return instance;
+    }
+
+    public static Option create(char opt)
+                         throws IllegalArgumentException
+    {
+        return create(String.valueOf(opt));
+    }
+
+    public static Option create()
+                         throws IllegalArgumentException
+    {
+        if (longopt == null)
+        {
+            throw new IllegalArgumentException("must specify longopt");
+        }
+
+        return create(null);
+    }
+
+    public static Option create(String opt)
+                         throws IllegalArgumentException
+    {
+        Option option = new Option(opt, description);
+
+
+        option.setLongOpt(longopt);
+        option.setRequired(required);
+        option.setOptionalArg(optionalArg);
+        option.setArgs(numberOfArgs);
+        option.setType(type);
+        option.setValueSeparator(valuesep);
+        option.setArgName(argName);
+
+
+        OptionBuilder.reset();
+
+        return option;
+    }
+}</p>
+              <p>Response: <span class="p-2 rounded bg-light text-muted small d-block mb-2"></span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+package org.apache.commons.cli;
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+public class OptionBuilder {
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    private static String longopt;
+    private static String description;
+    private static String argName;
+    private static boolean required;
+    private static int numberOfArgs = Option.UNINITIALIZED;
+    private static Object type;
+    private static boolean optionalArg;
+    private static char valuesep;
+    private static OptionBuilder instance = new OptionBuilder();
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    private OptionBuilder() {
+    }
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    private static void reset() {
+        description = null;
+        argName = "arg";
+        longopt = null;
+        type = null;
+        required = false;
+        numberOfArgs = Option.UNINITIALIZED;
+        optionalArg = false;
+        valuesep = (char) 0;
+    }
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    public static OptionBuilder withLongOpt(String newLongopt) {
+        OptionBuilder.longopt = newLongopt;
+        return instance;
+    }
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    public static OptionBuilder hasArg() {
+        OptionBuilder.numberOfArgs = 1;
+        return instance;
+    }
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    public static OptionBuilder hasArg(boolean hasArg) {
+        OptionBuilder.numberOfArgs = (hasArg == true) ? 1 : Option.UNINITIALIZED;
+        return instance;
+    }
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    public static OptionBuilder withArgName(String name) {
+        OptionBuilder.argName = name;
+        return instance;
+    }
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    public static OptionBuilder isRequired() {
+        OptionBuilder.required = true;
+        return instance;
+    }
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    public static OptionBuilder withValueSeparator(char sep) {
+        OptionBuilder.valuesep = sep;
+        return instance;
+    }
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    public static OptionBuilder withValueSeparator() {
+        OptionBuilder.valuesep = '=';
+        return instance;
+    }
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    public static OptionBuilder isRequired(boolean newRequired) {
+        OptionBuilder.required = newRequired;
+        return instance;
+    }
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    public static OptionBuilder hasArgs() {
+        OptionBuilder.numberOfArgs = Option.UNLIMITED_VALUES;
+        return instance;
+    }
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    public static OptionBuilder hasArgs(int num) {
+        OptionBuilder.numberOfArgs = num;
+        return instance;
+    }
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    public static OptionBuilder hasOptionalArg() {
+        OptionBuilder.numberOfArgs = 1;
+        OptionBuilder.optionalArg = true;
+        return instance;
+    }
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    public static OptionBuilder hasOptionalArgs() {
+        OptionBuilder.numberOfArgs = Option.UNLIMITED_VALUES;
+        OptionBuilder.optionalArg = true;
+        return instance;
+    }
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    public static OptionBuilder hasOptionalArgs(int numArgs) {
+        OptionBuilder.numberOfArgs = numArgs;
+        OptionBuilder.optionalArg = true;
+        return instance;
+    }
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    public static OptionBuilder withType(Object newType) {
+        OptionBuilder.type = newType;
+        return instance;
+    }
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+
+</span>
+    public static OptionBuilder withDescription(String newDescription) {
+        OptionBuilder.description = new</p>
+            </div>
+          </div>
+        </div></pre></div></body></html>

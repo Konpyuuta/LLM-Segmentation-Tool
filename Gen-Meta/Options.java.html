@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+                <html lang="en">
+                <head>
+                    <meta charset="iso-8859-1">
+                    <script src="https://code.jquery.com/jquery-3.6.1.slim.js"></script>
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+                    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+                    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+                    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+                    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+                    <link th:href="@{/css/style.css}" rel="stylesheet" type="text/css">
+
+                    <link rel="icon" href="https://www.zhaw.ch/favicon.ico" type="image/png">
+                    <title>M. Sc. Seminar in Software Engineering: Segmentations by LLama 3.3 70B/fp-16 Instruct model</title></head>
+                    <body>
+                    <div class="container py-5"><div id="accordion"><pre><div class="card">
+          <div class="card-header" id="Options.java: PromptType.GEN_META with temperature = 0 and top P = 1">
+            <h5 class="mb-0">
+              <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOptions.java:PromptType.GEN_META" aria-expanded="true" aria-controls="collapseOptions.java:PromptType.GEN_META">
+                Konfiguration - Temperature: Options.java, Technique: PromptType.GEN_META
+              </button>
+            </h5>
+          </div>
+
+          <div id="collapseOptions.java:PromptType.GEN_META" class="collapse show" aria-labelledby="Options.java:PromptType.GEN_META" data-parent="#accordion">
+            <div class="card-body">
+              <p>Prompt: 
+**Prompt:**
+
+---
+
+**Task:**
+
+Split the given source code under SOURCE-CODE into syntactically and semantically coherent fragments by inserting `###` as a delimiter. The goal is to produce code fragments that are meaningful, self-contained, and small enough to be used for Delta Debugging analysis.
+
+**Guidelines:**
+
+* Each fragment must be no longer than 5 lines.
+
+* Each fragment should represent a logical code unit, such as:
+
+  * a package or import statement
+  * a class or interface declaration
+  * a method signature (with its parameter list)
+  * a block of related statements (e.g., variable declarations, loops, conditionals)
+
+* **Large methods must be split** into smaller, logical sections. For example:
+
+  * Variable declarations
+  * Loops
+  * Conditional blocks
+  * Return statements
+
+* **However, do not split apart directly dependent statements.** For example:
+
+  * If a variable is declared and immediately used in the next statement(s), keep those together.
+  * For example, in a block like:
+
+    ###
+    Collection processed = options.values();
+    Option[] optionsArray = new Option[processed.size()];
+    return (Option[]) processed.toArray(optionsArray);
+    ###
+
+    These lines are **dependent** and must remain as a single fragment.
+
+* Avoid splitting inside a single statement or expression.
+
+* Fragments should remain syntactically correct and semantically clear.
+
+* The prompt should work for Java and similar languages.
+
+---
+
+**Example Input:**
+
+```java
+import java.util.*;
+
+public class TfIdf {
+
+    private Integer alpha;
+
+    public static double tf(List<String> doc, String term) {
+        int termCount = 0;
+        int totalTerms = doc.size();
+        for (String word : doc) {
+            if (word.equalsIgnoreCase(term)) {
+                termCount++;
+            }
+        }
+        double tf = (double) termCount / totalTerms;
+        return tf;
+    }
+    
+    public static double idf(List<List<String>> docs, String term) {
+        int totalDocs = docs.size();
+        int docsWithTerm = 0;
+        for (List<String> document : docs) {
+            for (String word : document) {
+                if (word.equalsIgnoreCase(term)) {
+                    docsWithTerm++;
+                    break;
+                }
+            }
+        }     
+        double idf = Math.log((double) totalDocs / (1 + docsWithTerm));
+        return idf;
+    }
+
+    public static double tfidf(List<String> doc, List<List<String>> docs, String term) {
+        double tf = tf(doc, term);
+        double idf = idf(docs, term);
+        return tf * idf;
+    }
+}
+```
+
+---
+
+**Expected Output:**
+
+```java
+import java.util.*;
+###
+public class TfIdf {
+###
+    private Integer alpha;
+###
+    public static double tf(List<String> doc, String term) {
+###
+        int termCount = 0;
+###
+        int totalTerms = doc.size();
+###
+        for (String word : doc) {
+            if (word.equalsIgnoreCase(term)) {
+                termCount++;
+            }
+        }
+###
+        double tf = (double) termCount / totalTerms;
+        return tf;
+###
+    }
+###
+    public static double idf(List<List<String>> docs, String term) {
+###
+        int totalDocs = docs.size();
+###
+        int docsWithTerm = 0;
+###
+        for (List<String> document : docs) {
+            for (String word : document) {
+                if (word.equalsIgnoreCase(term)) {
+                    docsWithTerm++;
+                    break;
+                }
+            }
+        }
+###
+        double idf = Math.log((double) totalDocs / (1 + docsWithTerm));
+        return idf;
+###
+    public static double tfidf(List<String> doc, List<List<String>> docs, String term) {
+###
+        double tf = tf(doc, term);
+        double idf = idf(docs, term);
+        return tf * idf;
+###
+    }
+###
+
+
+ SOURCE-CODE: 
+package org.apache.commons.cli;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+public class Options {
+
+    private Map shortOpts = new HashMap();
+
+    private Map longOpts = new HashMap();
+
+    private List requiredOpts = new ArrayList();
+
+    private Map optionGroups = new HashMap();
+
+    public Options()
+    {
+    }
+
+    public Options addOptionGroup(OptionGroup group)
+    {
+        Iterator options = group.getOptions().iterator();
+
+        if (group.isRequired())
+        {
+            requiredOpts.add(group);
+        }
+
+        while (options.hasNext())
+        {
+            Option option = (Option) options.next();
+
+            option.setRequired(false);
+            addOption(option);
+
+            optionGroups.put(option.getKey(), group);
+        }
+
+        return this;
+    }
+
+    Collection getOptionGroups(){
+    	return new HashSet(optionGroups.values());
+    }
+
+    public Options addOption(String opt, boolean hasArg, String description)
+    {
+        addOption(opt, null, hasArg, description);
+
+        return this;
+    }
+
+    public Options addOption(String opt, String longOpt, boolean hasArg, 
+                             String description)
+    {
+        addOption(new Option(opt, longOpt, hasArg, description));
+
+        return this;
+    }
+
+    public Options addOption(Option opt)
+    {
+        String key = opt.getKey();
+
+        if (opt.hasLongOpt())
+        {
+            longOpts.put(opt.getLongOpt(), opt);
+        }
+
+        if (opt.isRequired() )
+        {
+            if( requiredOpts.contains(key) ) {
+                requiredOpts.remove( requiredOpts.indexOf(key) );
+            }
+            requiredOpts.add(key);
+        }
+
+        shortOpts.put(key, opt);
+
+        return this;
+    }
+
+    public Collection getOptions()
+    {
+        return Collections.unmodifiableCollection(helpOptions());
+    }
+
+    List helpOptions()
+    {
+        List opts = new ArrayList(shortOpts.values());
+
+        Iterator iter = longOpts.values().iterator();
+
+        while (iter.hasNext())
+        {
+            Object item = iter.next();
+
+            if (!opts.contains(item))
+            {
+                opts.add(item);
+            }
+        }
+
+        return new ArrayList(opts);
+    }
+
+    public List getRequiredOptions()
+    {
+        return requiredOpts;
+    }
+
+    public Option getOption(String opt)
+    {
+        opt = Util.stripLeadingHyphens(opt);
+
+        if (shortOpts.containsKey(opt))
+        {
+            return (Option) shortOpts.get(opt);
+        }
+
+        return (Option) longOpts.get(opt);
+    }
+
+    public boolean hasOption(String opt)
+    {
+        opt = Util.stripLeadingHyphens(opt);
+
+        return shortOpts.containsKey(opt) || longOpts.containsKey(opt);
+    }
+
+    public OptionGroup getOptionGroup(Option opt)
+    {
+        return (OptionGroup) optionGroups.get(opt.getKey());
+    }
+
+    public String toString()
+    {
+        StringBuffer buf = new StringBuffer();
+
+        buf.append("[ Options: [ short ");
+        buf.append(shortOpts.toString());
+        buf.append(" ] [ long ");
+        buf.append(longOpts);
+        buf.append(" ]");
+
+        return buf.toString();
+    }
+}</p>
+              <p>Response: <span class="p-2 rounded bg-light text-muted small d-block mb-2">Here is the source code with `</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">` delimiters inserted:
+
+
+```java
+package org.apache.commons.cli;
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+import java.util.ArrayList;
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+import java.util.Collection;
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+import java.util.Collections;
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+import java.util.HashMap;
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+import java.util.HashSet;
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+import java.util.Iterator;
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+import java.util.List;
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+import java.util.Map;
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+public class Options {
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    private Map shortOpts = new HashMap();
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    private Map longOpts = new HashMap();
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    private List requiredOpts = new ArrayList();
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    private Map optionGroups = new HashMap();
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    public Options()
+    {
+    }
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    public Options addOptionGroup(OptionGroup group)
+    {
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        Iterator options = group.getOptions().iterator();
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        if (group.isRequired())
+        {
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+            requiredOpts.add(group);
+        }
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        while (options.hasNext())
+        {
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+            Option option = (Option) options.next();
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+            option.setRequired(false);
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+            addOption(option);
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+            optionGroups.put(option.getKey(), group);
+        }
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        return this;
+    }
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    Collection getOptionGroups(){
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    	return new HashSet(optionGroups.values());
+    }
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    public Options addOption(String opt, boolean hasArg, String description)
+    {
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        addOption(opt, null, hasArg, description);
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        return this;
+    }
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    public Options addOption(String opt, String longOpt, boolean hasArg, 
+                             String description)
+    {
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        addOption(new Option(opt, longOpt, hasArg, description));
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        return this;
+    }
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    public Options addOption(Option opt)
+    {
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        String key = opt.getKey();
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        if (opt.hasLongOpt())
+        {
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+            longOpts.put(opt.getLongOpt(), opt);
+        }
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        if (opt.isRequired() )
+        {
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+            if( requiredOpts.contains(key) ) {
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+                requiredOpts.remove( requiredOpts.indexOf(key) );
+            }
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+            requiredOpts.add(key);
+        }
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        shortOpts.put(key, opt);
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        return this;
+    }
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    public Collection getOptions()
+    {
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        return Collections.unmodifiableCollection(helpOptions());
+    }
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    List helpOptions()
+    {
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        List opts = new ArrayList(shortOpts.values());
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        Iterator iter = longOpts.values().iterator();
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        while (iter.hasNext())
+        {
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+            Object item = iter.next();
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+            if (!opts.contains(item))
+            {
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+                opts.add(item);
+            }
+        }
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        return new ArrayList(opts);
+    }
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    public List getRequiredOptions()
+    {
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        return requiredOpts;
+    }
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    public Option getOption(String opt)
+    {
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        opt = Util.stripLeadingHyphens(opt);
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        if (shortOpts.containsKey(opt))
+        {
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+            return (Option) shortOpts.get(opt);
+        }
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        return (Option) longOpts.get(opt);
+    }
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    public boolean hasOption(String opt)
+    {
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        opt = Util.stripLeadingHyphens(opt);
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        return shortOpts.containsKey(opt) || longOpts.containsKey(opt);
+    }
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    public OptionGroup getOptionGroup(Option opt)
+    {
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        return (OptionGroup) optionGroups.get(opt.getKey());
+    }
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    public String toString()
+    {
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        StringBuffer buf = new StringBuffer();
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        buf.append("[ Options: [ short ");
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        buf.append(shortOpts.toString());
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        buf.append(" ] [ long ");
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        buf.append(longOpts);
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        buf.append(" ]");
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        return buf.toString();
+    }
+</span>
+}</p>
+            </div>
+          </div>
+        </div></pre></div></body></html>

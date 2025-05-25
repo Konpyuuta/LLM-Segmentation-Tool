@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+                <html lang="en">
+                <head>
+                    <meta charset="iso-8859-1">
+                    <script src="https://code.jquery.com/jquery-3.6.1.slim.js"></script>
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+                    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+                    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+                    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+                    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+                    <link th:href="@{/css/style.css}" rel="stylesheet" type="text/css">
+
+                    <link rel="icon" href="https://www.zhaw.ch/favicon.ico" type="image/png">
+                    <title>M. Sc. Seminar in Software Engineering: Segmentations by LLama 3.3 70B/fp-16 Instruct model</title></head>
+                    <body>
+                    <div class="container py-5"><div id="accordion"><pre><div class="card">
+          <div class="card-header" id="OptionGroup.java: PromptType.ZERO_SHOT with temperature = 0 and top P = 1">
+            <h5 class="mb-0">
+              <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOptionGroup.java:PromptType.ZERO_SHOT" aria-expanded="true" aria-controls="collapseOptionGroup.java:PromptType.ZERO_SHOT">
+                Konfiguration - Temperature: OptionGroup.java, Technique: PromptType.ZERO_SHOT
+              </button>
+            </h5>
+          </div>
+
+          <div id="collapseOptionGroup.java:PromptType.ZERO_SHOT" class="collapse show" aria-labelledby="OptionGroup.java:PromptType.ZERO_SHOT" data-parent="#accordion">
+            <div class="card-body">
+              <p>Prompt: SOURCE-CODE: 
+package org.apache.commons.cli;
+
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+
+
+public class OptionGroup {
+
+    private HashMap optionMap = new HashMap();
+
+    private String selected;
+
+    private boolean required;
+
+    public OptionGroup addOption(Option opt)
+    {
+
+        optionMap.put(opt.getKey(), opt);
+
+        return this;
+    }
+
+    public Collection getNames()
+    {
+        return optionMap.keySet();
+    }
+
+    public Collection getOptions()
+    {
+        return optionMap.values();
+    }
+
+    public void setSelected(Option opt)
+                     throws AlreadySelectedException
+    {
+
+        if ((this.selected == null) || this.selected.equals(opt.getOpt()))
+        {
+            this.selected = opt.getOpt();
+        }
+        else
+        {
+            throw new AlreadySelectedException("an option from this group has "
+                                               + "already been selected: '"
+                                               + selected + "'");
+        }
+    }
+
+    public String getSelected()
+    {
+        return selected;
+    }
+
+    public void setRequired(boolean required)
+    {
+        this.required = required;
+    }
+
+    public boolean isRequired()
+    {
+        return this.required;
+    }
+
+    public String toString()
+    {
+        StringBuffer buff = new StringBuffer();
+
+        Iterator iter = getOptions().iterator();
+
+        buff.append("[");
+
+        while (iter.hasNext())
+        {
+            Option option = (Option) iter.next();
+
+            if (option.getOpt() != null)
+            {
+                buff.append("-");
+                buff.append(option.getOpt());
+            }
+            else
+            {
+                buff.append("--");
+                buff.append(option.getLongOpt());
+            }
+
+            buff.append(" ");
+            buff.append(option.getDescription());
+
+            if (iter.hasNext())
+            {
+                buff.append(", ");
+            }
+        }
+
+        buff.append("]");
+
+        return buff.toString();
+    }
+}
+ Prompt: Take a look at the java-code under SOURCE-CODE above and build semantically coherent code-fragments by dividing the code with ### as a delimiter. Make sure to always include ### at the end of a code-fragment. Only give the code-fragments as a response, omit everything else.</p>
+              <p>Response: <span class="p-2 rounded bg-light text-muted small d-block mb-2">package org.apache.commons.cli;
+
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+public class OptionGroup {
+
+    private HashMap optionMap = new HashMap();
+
+    private String selected;
+
+    private boolean required;
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    public OptionGroup addOption(Option opt)
+    {
+
+        optionMap.put(opt.getKey(), opt);
+
+        return this;
+    }
+
+    public Collection getNames()
+    {
+        return optionMap.keySet();
+    }
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    public Collection getOptions()
+    {
+        return optionMap.values();
+    }
+
+    public void setSelected(Option opt)
+                     throws AlreadySelectedException
+    {
+
+        if ((this.selected == null) || this.selected.equals(opt.getOpt()))
+        {
+            this.selected = opt.getOpt();
+        }
+        else
+        {
+            throw new AlreadySelectedException("an option from this group has "
+                                               + "already been selected: '"
+                                               + selected + "'");
+        }
+    }
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    public String getSelected()
+    {
+        return selected;
+    }
+
+    public void setRequired(boolean required)
+    {
+        this.required = required;
+    }
+
+    public boolean isRequired()
+    {
+        return this.required;
+    }
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    public String toString()
+    {
+        StringBuffer buff = new StringBuffer();
+
+        Iterator iter = getOptions().iterator();
+
+        buff.append("[");
+
+        while (iter.hasNext())
+        {
+            Option option = (Option) iter.next();
+
+            if (option.getOpt() != null)
+            {
+                buff.append("-");
+                buff.append(option.getOpt());
+            }
+            else
+            {
+                buff.append("--");
+                buff.append(option.getLongOpt());
+            }
+
+            buff.append(" ");
+            buff.append(option.getDescription());
+
+            if (iter.hasNext())
+            {
+                buff.append(", ");
+            }
+        }
+
+        buff.append("]");
+
+        return buff.toString();
+    }
+}</span></p>
+            </div>
+          </div>
+        </div></pre></div></body></html>

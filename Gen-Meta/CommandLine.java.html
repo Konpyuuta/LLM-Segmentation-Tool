@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+                <html lang="en">
+                <head>
+                    <meta charset="iso-8859-1">
+                    <script src="https://code.jquery.com/jquery-3.6.1.slim.js"></script>
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+                    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+                    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+                    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+                    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+                    <link th:href="@{/css/style.css}" rel="stylesheet" type="text/css">
+
+                    <link rel="icon" href="https://www.zhaw.ch/favicon.ico" type="image/png">
+                    <title>M. Sc. Seminar in Software Engineering: Segmentations by LLama 3.3 70B/fp-16 Instruct model</title></head>
+                    <body>
+                    <div class="container py-5"><div id="accordion"><pre><div class="card">
+          <div class="card-header" id="CommandLine.java: PromptType.GEN_META with temperature = 0 and top P = 1">
+            <h5 class="mb-0">
+              <button class="btn btn-link" data-toggle="collapse" data-target="#collapseCommandLine.java:PromptType.GEN_META" aria-expanded="true" aria-controls="collapseCommandLine.java:PromptType.GEN_META">
+                Konfiguration - Temperature: CommandLine.java, Technique: PromptType.GEN_META
+              </button>
+            </h5>
+          </div>
+
+          <div id="collapseCommandLine.java:PromptType.GEN_META" class="collapse show" aria-labelledby="CommandLine.java:PromptType.GEN_META" data-parent="#accordion">
+            <div class="card-body">
+              <p>Prompt: 
+**Prompt:**
+
+---
+
+**Task:**
+
+Split the given source code under SOURCE-CODE into syntactically and semantically coherent fragments by inserting `###` as a delimiter. The goal is to produce code fragments that are meaningful, self-contained, and small enough to be used for Delta Debugging analysis.
+
+**Guidelines:**
+
+* Each fragment must be no longer than 5 lines.
+
+* Each fragment should represent a logical code unit, such as:
+
+  * a package or import statement
+  * a class or interface declaration
+  * a method signature (with its parameter list)
+  * a block of related statements (e.g., variable declarations, loops, conditionals)
+
+* **Large methods must be split** into smaller, logical sections. For example:
+
+  * Variable declarations
+  * Loops
+  * Conditional blocks
+  * Return statements
+
+* **However, do not split apart directly dependent statements.** For example:
+
+  * If a variable is declared and immediately used in the next statement(s), keep those together.
+  * For example, in a block like:
+
+    ###
+    Collection processed = options.values();
+    Option[] optionsArray = new Option[processed.size()];
+    return (Option[]) processed.toArray(optionsArray);
+    ###
+
+    These lines are **dependent** and must remain as a single fragment.
+
+* Avoid splitting inside a single statement or expression.
+
+* Fragments should remain syntactically correct and semantically clear.
+
+* The prompt should work for Java and similar languages.
+
+---
+
+**Example Input:**
+
+```java
+import java.util.*;
+
+public class TfIdf {
+
+    private Integer alpha;
+
+    public static double tf(List<String> doc, String term) {
+        int termCount = 0;
+        int totalTerms = doc.size();
+        for (String word : doc) {
+            if (word.equalsIgnoreCase(term)) {
+                termCount++;
+            }
+        }
+        double tf = (double) termCount / totalTerms;
+        return tf;
+    }
+    
+    public static double idf(List<List<String>> docs, String term) {
+        int totalDocs = docs.size();
+        int docsWithTerm = 0;
+        for (List<String> document : docs) {
+            for (String word : document) {
+                if (word.equalsIgnoreCase(term)) {
+                    docsWithTerm++;
+                    break;
+                }
+            }
+        }     
+        double idf = Math.log((double) totalDocs / (1 + docsWithTerm));
+        return idf;
+    }
+
+    public static double tfidf(List<String> doc, List<List<String>> docs, String term) {
+        double tf = tf(doc, term);
+        double idf = idf(docs, term);
+        return tf * idf;
+    }
+}
+```
+
+---
+
+**Expected Output:**
+
+```java
+import java.util.*;
+###
+public class TfIdf {
+###
+    private Integer alpha;
+###
+    public static double tf(List<String> doc, String term) {
+###
+        int termCount = 0;
+###
+        int totalTerms = doc.size();
+###
+        for (String word : doc) {
+            if (word.equalsIgnoreCase(term)) {
+                termCount++;
+            }
+        }
+###
+        double tf = (double) termCount / totalTerms;
+        return tf;
+###
+    }
+###
+    public static double idf(List<List<String>> docs, String term) {
+###
+        int totalDocs = docs.size();
+###
+        int docsWithTerm = 0;
+###
+        for (List<String> document : docs) {
+            for (String word : document) {
+                if (word.equalsIgnoreCase(term)) {
+                    docsWithTerm++;
+                    break;
+                }
+            }
+        }
+###
+        double idf = Math.log((double) totalDocs / (1 + docsWithTerm));
+        return idf;
+###
+    public static double tfidf(List<String> doc, List<List<String>> docs, String term) {
+###
+        double tf = tf(doc, term);
+        double idf = idf(docs, term);
+        return tf * idf;
+###
+    }
+###
+
+
+ SOURCE-CODE: 
+package org.apache.commons.cli;
+
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+
+
+public class CommandLine {
+
+    private List args = new LinkedList();
+
+    private Map options = new HashMap();
+    private Map names = new HashMap();
+
+    private Map hashcodeMap = new HashMap();
+
+    CommandLine()
+    {
+    }
+
+    public boolean hasOption(String opt)
+    {
+        return options.containsKey(opt);
+    }
+
+
+    public boolean hasOption(char opt)
+    {
+        return hasOption(String.valueOf(opt));
+    }
+
+    public Object getOptionObject(String opt)
+    {
+        String res = getOptionValue(opt);
+
+        if (!options.containsKey(opt))
+        {
+            return null;
+        }
+
+        Object type = ((Option) options.get(opt)).getType();
+
+        return (res == null)        ? null : TypeHandler.createValue(res, type);
+    }
+
+    public Object getOptionObject(char opt)
+    {
+        return getOptionObject(String.valueOf(opt));
+    }
+
+    public String getOptionValue(String opt)
+    {
+        String[] values = getOptionValues(opt);
+
+        return (values == null) ? null : values[0];
+    }
+
+    public String getOptionValue(char opt)
+    {
+        return getOptionValue(String.valueOf(opt));
+    }
+
+    public String[] getOptionValues(String opt)
+    {
+        opt = Util.stripLeadingHyphens(opt);
+
+        String key = opt;
+        if (names.containsKey(opt))
+        {
+            key = (String) names.get(opt);
+        }
+        if (options.containsKey(key))
+        {
+            return ((Option) options.get(key)).getValues();
+        }
+
+        return null;
+        }
+
+    public String[] getOptionValues(char opt)
+    {
+        return getOptionValues(String.valueOf(opt));
+    }
+
+    public String getOptionValue(String opt, String defaultValue)
+    {
+        String answer = getOptionValue(opt);
+
+        return (answer != null) ? answer : defaultValue;
+    }
+
+    public String getOptionValue(char opt, String defaultValue)
+    {
+        return getOptionValue(String.valueOf(opt), defaultValue);
+    }
+
+    public String[] getArgs()
+    {
+        String[] answer = new String[args.size()];
+
+        args.toArray(answer);
+
+        return answer;
+    }
+
+    public List getArgList()
+    {
+        return args;
+    }
+
+    void addArg(String arg)
+    {
+        args.add(arg);
+    }
+
+    void addOption(Option opt)
+    {
+        hashcodeMap.put(new Integer(opt.hashCode()), opt);
+        String key = opt.getKey();
+        if (key == null)
+        {
+            key = opt.getLongOpt();
+        }
+        else
+        {
+            names.put(opt.getLongOpt(), key);
+        }
+        options.put(key, opt);
+    }
+
+    public Iterator iterator()
+    {
+        return hashcodeMap.values().iterator();
+    }
+
+    public Option[] getOptions()
+    {
+        Collection processed = options.values();
+        Option[] optionsArray = new Option[processed.size()];
+        return (Option[]) processed.toArray(optionsArray);
+    }
+}
+</p>
+              <p>Response: <span class="p-2 rounded bg-light text-muted small d-block mb-2">```java
+package org.apache.commons.cli;
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+public class CommandLine {
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    private List args = new LinkedList();
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    private Map options = new HashMap();
+    private Map names = new HashMap();
+    private Map hashcodeMap = new HashMap();
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    CommandLine()
+    {
+    }
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    public boolean hasOption(String opt)
+    {
+        return options.containsKey(opt);
+    }
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    public boolean hasOption(char opt)
+    {
+        return hasOption(String.valueOf(opt));
+    }
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    public Object getOptionObject(String opt)
+    {
+        String res = getOptionValue(opt);
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        if (!options.containsKey(opt))
+        {
+            return null;
+        }
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        Object type = ((Option) options.get(opt)).getType();
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        return (res == null)       ? null : TypeHandler.createValue(res, type);
+    }
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    public Object getOptionObject(char opt)
+    {
+        return getOptionObject(String.valueOf(opt));
+    }
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    public String getOptionValue(String opt)
+    {
+        String[] values = getOptionValues(opt);
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        return (values == null)? null : values[0];
+    }
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    public String getOptionValue(char opt)
+    {
+        return getOptionValue(String.valueOf(opt));
+    }
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    public String[] getOptionValues(String opt)
+    {
+        opt = Util.stripLeadingHyphens(opt);
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        String key = opt;
+        if (names.containsKey(opt))
+        {
+            key = (String) names.get(opt);
+        }
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        if (options.containsKey(key))
+        {
+            return ((Option) options.get(key)).getValues();
+        }
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        return null;
+    }
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    public String[] getOptionValues(char opt)
+    {
+        return getOptionValues(String.valueOf(opt));
+    }
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    public String getOptionValue(String opt, String defaultValue)
+    {
+        String answer = getOptionValue(opt);
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        return (answer!= null)? answer : defaultValue;
+    }
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    public String getOptionValue(char opt, String defaultValue)
+    {
+        return getOptionValue(String.valueOf(opt), defaultValue);
+    }
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    public String[] getArgs()
+    {
+        String[] answer = new String[args.size()];
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        args.toArray(answer);
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        return answer;
+    }
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    public List getArgList()
+    {
+        return args;
+    }
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    void addArg(String arg)
+    {
+        args.add(arg);
+    }
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    void addOption(Option opt)
+    {
+        hashcodeMap.put(new Integer(opt.hashCode()), opt);
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        String key = opt.getKey();
+        if (key == null)
+        {
+            key = opt.getLongOpt();
+        }
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        else
+        {
+            names.put(opt.getLongOpt(), key);
+        }
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        options.put(key, opt);
+    }
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    public Iterator iterator()
+    {
+        return hashcodeMap.values().iterator();
+    }
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+    public Option[] getOptions()
+    {
+        Collection processed = options.values();
+        Option[] optionsArray = new Option[processed.size()];
+</span><span class="p-2 rounded bg-light text-muted small d-block mb-2">
+        return (Option[]) processed.toArray(optionsArray);
+    }
+</span>
+```</p>
+            </div>
+          </div>
+        </div></pre></div></body></html>
